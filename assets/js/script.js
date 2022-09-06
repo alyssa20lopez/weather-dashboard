@@ -13,48 +13,42 @@ var findWeather = function(data, city) {
   console.log(data)
   var currentEl = document.querySelector('#current-weather')
   var h2El = document.createElement('h2')
-  var currentDay = ('#current-day').html("" + moment().format("ddd, MMMM Do"));
+  var icon = data.current.weather[0].icon
+  // var currentDay = ('#current-day').html("" + moment().format("ddd, MMMM Do"));
   // date = (moment().subtract(10, 'days').calendar());
   // Add Image + Date
-  // var imageEl2 = document.createElement('img')
-  //   imageEl2.alt = icon
-  //   imageEl2.src = 'https://openweathermap.org/img/wn/'+ icon +'@2x.png'
+  var imageEl2 = document.createElement('img')
+    imageEl2.alt = icon
+    imageEl2.src = 'https://openweathermap.org/img/wn/'+ icon +'@2x.png'
   var pEl = document.createElement('p')
   var humEl = document.createElement('p')
   var windEl = document.createElement('p')
-  // var uviEl = document.createElement('p')
+  var uviEl = document.createElement('p')
   h2El.textContent = city.name
   pEl.textContent = 'Temperature: ' + data.current.temp + '°F'
   humEl.textContent = 'Humidity: ' + data.daily[0].humidity + '%'
   windEl.textContent = 'Wind Speed: ' + data.daily[0].wind_speed + ' MPH'
-  // uviEl.textContent = 'UV Index: ' + data.daily[0].uvi
+  uviEl.textContent = 'UV Index: ' + data.daily[0].uvi
   currentEl.appendChild(h2El)
-  // currentEl.appendChild(imageEl2)
+  currentEl.appendChild(imageEl2)
   currentEl.appendChild(pEl)
   currentEl.appendChild(humEl)
   currentEl.appendChild(windEl)
-  // currentEl.appendChild(uviEl)
+  currentEl.appendChild(uviEl)
 
   // Add Favorable, Moderate, or Severe for UV Index
-  // var uviEl = document.getElementById('uv-index')
-  // uviEl.textcontent = 'UV Index: ' + data.daily[0].uvi
-  // currentEl.appendChild(uviEl)
-  // var uviColor = document.createElement('p');
-  // uviColor.appendChild(uviEl);
   
-  // if (data.daily[0].uvi < 3) {
-  //   uviColor.classList.add('low')
-  // } else if (data.daily[0].uvi < 6) {
-  //   uviColor.classList.add('low')
-  // } else if (data.daily[0].uvi < 8) {
-  //   uviColor.classList.add('low')
-  // } else if (data.daily[0].uvi < 11) {
-  //   uviColor.classList.add('low')
-  // } else {
-  //   uviColor.classList.add('low')
-  // }
-
-  // currentEl.appendChild(uviEl)
+  if (data.daily[0].uvi >= 0 && data.daily[0].uvi <= 3) {
+   uviEl.classList.add('low')
+  } else if (data.daily[0].uvi >= 4 && data.daily[0].uvi <= 6) {
+   uviEl.classList.add('moderate')
+  } else if (data.daily[0].uvi >= 7 && data.daily[0].uvi <= 8) {
+   uviEl.classList.add('high')
+  } else if (data.daily[0].uvi >= 9 && data.daily[0].uvi <= 10) {
+   uviEl.classList.add('very-high')
+  } else {
+   uviEl.classList.add('extreme')
+  }
 
   // 5-Day Forecast
   var fiveDayForecast = data.daily.slice(1,6);
@@ -158,4 +152,4 @@ var handleCity = function(event) {
 
 displayBtn();
 searchEl.addEventListener('click', handler)
-previousBtn.addEventListener('click', handleCity
+previousBtn.addEventListener('click', handleCity)
