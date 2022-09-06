@@ -35,6 +35,27 @@ var findWeather = function(data, city) {
   currentEl.appendChild(windEl)
   // currentEl.appendChild(uviEl)
 
+  // Add Favorable, Moderate, or Severe for UV Index
+  // var uviEl = document.getElementById('uv-index')
+  // uviEl.textcontent = 'UV Index: ' + data.daily[0].uvi
+  // currentEl.appendChild(uviEl)
+  // var uviColor = document.createElement('p');
+  // uviColor.appendChild(uviEl);
+  
+  // if (data.daily[0].uvi < 3) {
+  //   uviColor.classList.add('low')
+  // } else if (data.daily[0].uvi < 6) {
+  //   uviColor.classList.add('low')
+  // } else if (data.daily[0].uvi < 8) {
+  //   uviColor.classList.add('low')
+  // } else if (data.daily[0].uvi < 11) {
+  //   uviColor.classList.add('low')
+  // } else {
+  //   uviColor.classList.add('low')
+  // }
+
+  // currentEl.appendChild(uviEl)
+
   // 5-Day Forecast
   var fiveDayForecast = data.daily.slice(1,6);
   fiveDaysEl.innerHTML= null
@@ -69,3 +90,72 @@ var findWeather = function(data, city) {
     card.appendChild(hum)
   }
 };  
+
+// Search Button
+var displayBtn = function(cities) {
+  var citySaved = JSON.parse(localStorage.getItem('cities')) || []; 
+  previousBtn.innerHTML = null
+  currentEl.innerHTML = null
+  for(var city of citySaved) {
+    var buttonEl = document.createElement('button');
+    buttonEl.textContent = city;
+    buttonEl.className = 'btn btn primary m-2';
+    previousBtn.appendChild(buttonEl);
+  }  
+}; 
+
+// One Call
+
+var getOneCall = function(city) {
+  var oneCall = `https://api.openweathermap.org/data/3.0/onecall?lat=${city.lat}&lon=${city.lon}&appid=${appid}&units=imperial&exclude=hourly,minutely`;
+
+  fetch(oneCall)
+    .then(toJSON)
+    .then(function(data){
+      findWeather(data, city);
+    })
+};
+var saveToLocalStorage = function(city) {
+  var citySaved = JSON.parse(localStorage.getItem('cities')) || [];
+  citySaved.push(city)
+  var cityArray = Array.from(new Set (citySaved));
+  var saved = JSON.stringify(cityArray);
+  localStorage.setItem('cities', saved)
+}
+
+var getGeo = function(locations) {
+  var city = locations[0]
+  console.log('LAT, city.lat');
+  console.log('LON, city.lon');
+  saveToLocalStorage(city.name);
+  getOneCall(city)
+  displayBtn()
+};
+
+var handler = function(event) {
+  event.preventDefault()
+  var q = document.querySelector('#input')
+  var newURL = `https://api.openweathermap.org/geo/1.0/direct?q=${q.value}&appid=${appid}`
+
+  fetch(newURL)
+    .then(toJSON)
+    .then(getGeo)
+}
+
+var handleCity = function(event) {
+  event.preventDefault()
+  previousBtn.innerHTML = null
+
+  if (event.target.matches('button')) {
+    var q = event.target.textContent
+    var geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${q}&appid=${appid}`;
+    
+    fetch(geoURL)
+      .then(toJSON)
+      .then(getGeo)
+  }
+}
+
+displayBtn();
+searchEl.addEventListener('click', handler)
+previousBtn.addEventListener('click', handleCity
