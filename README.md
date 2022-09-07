@@ -14,4 +14,4 @@ This is a weather dashboard application that allows the user to see the weather 
 ## Visuals
 Here is a visual of the front-end of the webpage design.
 
-![Alt text](./assets/images/work-day-scheduler.png)
+![Alt text](./assets/images/Weather-Dashboard.png)

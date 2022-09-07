@@ -22,6 +22,7 @@
     color: white;
     border-radius: 7px 7px;
     width: fit-content;
+    padding: 0% 1%;
   }
   
   .moderate {
@@ -29,6 +30,7 @@
     color: white;
     border-radius: 7px 7px;
     width: fit-content;
+    padding: 0% 1%;
   }
   
   .high {
@@ -36,6 +38,7 @@
     color: white;
     border-radius: 7px 7px;
     width: fit-content;
+    padding: 0% 1%;
   }
   
   .very-high {
@@ -43,6 +46,7 @@
     color: white;
     border-radius: 7px 7px;
     width: fit-content;
+    padding: 0% 1%;
   }
   
   .extreme {
@@ -50,4 +54,5 @@
     color: white;
     border-radius: 7px 7px;
     width: fit-content;
+    padding: 0% 1%;
   }
