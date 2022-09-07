@@ -11,29 +11,43 @@
     padding: 2%;
     text-align: center;
   }
-  
-  /* UV Index Colors */
-  .list-group-item {
-    line-height: 0.5;
-    border: none;
+
+  div img {
+    width: 50px;
   }
-  
+
+  /* UV Index Colors */
   .low {
     background-color: #A9DFBF;
+    color: white;
+    border-radius: 7px 7px;
+    width: fit-content;
   }
   
   .moderate {
     background-color: #F9E79F;
+    color: white;
+    border-radius: 7px 7px;
+    width: fit-content;
   }
   
   .high {
     background-color: #E59866;
+    color: white;
+    border-radius: 7px 7px;
+    width: fit-content;
   }
   
   .very-high {
     background-color: #CB4335;
+    color: white;
+    border-radius: 7px 7px;
+    width: fit-content;
   }
   
   .extreme {
     background-color: #AA336A;
+    color: white;
+    border-radius: 7px 7px;
+    width: fit-content;
   }

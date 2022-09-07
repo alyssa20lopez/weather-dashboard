@@ -8,15 +8,13 @@ var toJSON = function(response) {
   return response.json();
 };
 
-// Search Bar
+// Current Day
 var findWeather = function(data, city) {
   console.log(data)
   var currentEl = document.querySelector('#current-weather')
   var h2El = document.createElement('h2')
+  var date = new Date(data.current.dt * 1000).toDateString
   var icon = data.current.weather[0].icon
-  // var currentDay = ('#current-day').html("" + moment().format("ddd, MMMM Do"));
-  // date = (moment().subtract(10, 'days').calendar());
-  // Add Image + Date
   var imageEl2 = document.createElement('img')
     imageEl2.alt = icon
     imageEl2.src = 'https://openweathermap.org/img/wn/'+ icon +'@2x.png'
@@ -30,14 +28,13 @@ var findWeather = function(data, city) {
   windEl.textContent = 'Wind Speed: ' + data.daily[0].wind_speed + ' MPH'
   uviEl.textContent = 'UV Index: ' + data.daily[0].uvi
   currentEl.appendChild(h2El)
-  currentEl.appendChild(imageEl2)
+  h2El.appendChild(imageEl2)
   currentEl.appendChild(pEl)
   currentEl.appendChild(humEl)
   currentEl.appendChild(windEl)
   currentEl.appendChild(uviEl)
 
-  // Add Favorable, Moderate, or Severe for UV Index
-  
+  // UV Index Colors
   if (data.daily[0].uvi >= 0 && data.daily[0].uvi <= 3) {
    uviEl.classList.add('low')
   } else if (data.daily[0].uvi >= 4 && data.daily[0].uvi <= 6) {
@@ -64,6 +61,7 @@ var findWeather = function(data, city) {
     var card = document.createElement('div')
     var date = document.createElement('p')
     date.textContent = dates
+    date.style.fontWeight = "bold";
     var imageEl = document.createElement('img')
     imageEl.alt = icon
     imageEl.src = 'https://openweathermap.org/img/wn/'+icon+'@2x.png'
@@ -97,8 +95,6 @@ var displayBtn = function(cities) {
     previousBtn.appendChild(buttonEl);
   }  
 }; 
-
-// One Call
 
 var getOneCall = function(city) {
   var oneCall = `https://api.openweathermap.org/data/3.0/onecall?lat=${city.lat}&lon=${city.lon}&appid=${appid}&units=imperial&exclude=hourly,minutely`;
